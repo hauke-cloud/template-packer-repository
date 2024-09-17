@@ -41,9 +41,11 @@ runs:
       run: |
         echo "Processing payload..."
         payload='${{ inputs.trigger-payload }}'
-        additional_vars=$(echo "$payload" | jq -r 'to_entries | map("-var \(.key)=\(.value)") | join(" ")')
 
-        echo "Adding additional settings: ${additional_vars}"
+        if [[ "${payload}" != "null"  ]]; then
+          additional_vars=$(echo "$payload" | jq -r 'to_entries | map("-var \(.key)=\(.value)") | join(" ")')
+          echo "Adding additional settings: ${additional_vars}"
+        fi
 
         packer validate \
           -var hcloud_token=${{ inputs.token }} \
@@ -57,9 +59,11 @@ runs:
       run: |
         echo "Processing payload..."
         payload='${{ inputs.trigger-payload }}'
-        additional_vars=$(echo "$payload" | jq -r 'to_entries | map("-var \(.key)=\(.value)") | join(" ")')
 
-        echo "Adding additional settings: ${additional_vars}"
+        if [[ "${payload}" != "null" ]]; then
+          additional_vars=$(echo "$payload" | jq -r 'to_entries | map("-var \(.key)=\(.value)") | join(" ")')
+          echo "Adding additional settings: ${additional_vars}"
+        fi
 
         packer build \
           -color=false \
