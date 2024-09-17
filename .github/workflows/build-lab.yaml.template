@@ -1,4 +1,4 @@
-name: hcp-packer
+name: Build LAB
 
 on:
   schedule:
@@ -38,7 +38,7 @@ jobs:
           template: template.pkr.hcl
           token: ${{ secrets.HCLOUD_TOKEN }}
           build-identifier: github-actions-${{ github.repository_id }}-${{ github.run_number }}
-          trigger-payload: ${{ github.event.client_payload }}
+          trigger-payload: ${{ toJson(github.event.client_payload) }}
 
   cleanup:
     name: Clean up resources from failed run
