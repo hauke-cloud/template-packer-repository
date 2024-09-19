@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     concurrency:
-      group: environment
+      group: lab
       cancel-in-progress: false
 
     if: github.event.schedule != '0 0 * * *'
